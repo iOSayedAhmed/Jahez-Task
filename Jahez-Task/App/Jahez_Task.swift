@@ -10,9 +10,17 @@ import SwiftUI
 @main
 struct Jahez_Task: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    var body: some Scene {
-        WindowGroup {
-            CoordinatorView()
-        }
-    }
+    @State private var showSplash = true
+
+       var body: some Scene {
+           WindowGroup {
+               if showSplash {
+                   SplashView {
+                       showSplash = false
+                   }
+               } else {
+                   CoordinatorView()
+               }
+           }
+       }
 }

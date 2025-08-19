@@ -53,11 +53,6 @@ struct MoviesView: View {
     private var contentView: some View {
         if viewModel.state.isLoading {
             LoadingView()
-        } else if viewModel.state.shouldShowError {
-            ErrorView(
-                message: viewModel.state.errorMessage ?? "Unknown error",
-                onRetry: viewModel.retryAfterError
-            )
         } else if viewModel.state.shouldShowNoResults {
             NoResultsView()
         } else if viewModel.state.shouldShowMovies {
