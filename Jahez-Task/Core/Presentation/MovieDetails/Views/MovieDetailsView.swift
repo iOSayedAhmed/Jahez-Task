@@ -20,7 +20,12 @@ struct MovieDetailsView: View {
         Group {
             if viewModel.state.isLoading {
                 LoadingView()
-            }  else if viewModel.state.shouldShowContent {
+            } else if viewModel.state.shouldShowError {
+                ErrorView(
+                    message: viewModel.state.errorMessage ?? "Unknown error",
+                    onRetry: viewModel.goBack
+                )
+            }else if viewModel.state.shouldShowContent {
                 movieDetailsContent
             } else {
                 EmptyView()

@@ -33,6 +33,7 @@
 		C8DF735A2E54182B001F8A1B /* Exceptions for "Jahez-Task" folder in "Jahez-Task" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Shared/Config/Info.plist,
 				"Shared/Managers/LocalStorageManager/FileManagerStorage+Extenstion.Swift",
 			);
 			target = C80747F82E52C80C004A4695 /* Jahez-Task */;
@@ -417,6 +418,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Jahez-Task/Shared/Config/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Jahez Movies";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -457,6 +459,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Jahez-Task/Shared/Config/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Jahez Movies";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;

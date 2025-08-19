@@ -30,6 +30,7 @@ extension APIRequest {
         guard let url = components?.url else {
             throw NetworkError.invalidURL
         }
+        print(url)
         
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
