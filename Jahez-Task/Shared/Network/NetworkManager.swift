@@ -88,7 +88,7 @@ enum MoviesAPIRequest: APIRequest {
     var path: String {
         switch self {
         case .getMovies(let page):
-            return "movie/popular"
+            return "discover/movie?include_adult=false&sort_by=popularity.desc&page=\(page)"
         case .getGenres:
             return "genre/movie/list"
         case .getMovieDetails(let id):
