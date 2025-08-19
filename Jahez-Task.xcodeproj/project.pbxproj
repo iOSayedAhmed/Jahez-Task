@@ -29,35 +29,9 @@
 		C80748112E52C80E004A4695 /* Jahez-TaskUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Jahez-TaskUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		C807483C2E52CBF2004A4695 /* Exceptions for "Jahez-Task" folder in "Jahez-Task" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Shared/DI/DIContainer.swift,
-				Shared/DI/RepositoryContainer.swift,
-			);
-			target = C80747F82E52C80C004A4695 /* Jahez-Task */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
-/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-		C807483D2E52CBF2004A4695 /* Exceptions for "Jahez-Task" folder in "Copy Bundle Resources" phase from "Jahez-Task" target */ = {
-			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
-			buildPhase = C80747F72E52C80C004A4695 /* Resources */;
-			membershipExceptions = (
-				Shared/DI/DIContainer.swift,
-				Shared/DI/RepositoryContainer.swift,
-			);
-		};
-/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		C80747FB2E52C80C004A4695 /* Jahez-Task */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				C807483C2E52CBF2004A4695 /* Exceptions for "Jahez-Task" folder in "Jahez-Task" target */,
-				C807483D2E52CBF2004A4695 /* Exceptions for "Jahez-Task" folder in "Copy Bundle Resources" phase from "Jahez-Task" target */,
-			);
 			path = "Jahez-Task";
 			sourceTree = "<group>";
 		};
