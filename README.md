@@ -33,6 +33,6 @@ Built with **SwiftUI** and **Clean Architecture** principles.
 ## 🚀 Setup
 1. Clone the repository  
    ```bash
-   git clone [[repository-url](https://github.com/iOSayedAhmed/Jahez-Task/)]
+   git clone [[repository-url]([https://github.com/iOSayedAhmed/Jahez-Task/)](https://github.com/iOSayedAhmed/Jahez-Task.git)]
    cd Jahez-Task
    open Jahez-Task.xcodeproj
