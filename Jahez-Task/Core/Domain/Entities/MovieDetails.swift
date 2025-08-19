@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MovieDetails: Identifiable, Equatable {
+struct MovieDetails: Codable, Identifiable, Equatable{
     let id: Int
     let title: String
     let overview: String
@@ -58,7 +58,7 @@ struct MovieDetails: Identifiable, Equatable {
     }
 }
 
-struct SpokenLanguage: Identifiable, Equatable {
+struct SpokenLanguage: Codable, Identifiable, Equatable {
     let id = UUID()
     let englishName: String
     let name: String

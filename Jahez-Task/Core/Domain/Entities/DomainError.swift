@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - Domain Errors
 enum DomainError: Error, LocalizedError {
-    case networkError(NetworkError)
+    case networkError(Error)
     case cacheError(String)
     case noData
     case invalidData

@@ -5,14 +5,14 @@
 //  Created by Elsayed Ahmed on 18/08/2025.
 //
 
+import Foundation
 import Combine
+import UIKit
 
 final class MoviesRepository: MoviesRepositoryProtocol {
-    private var cancellables = Set<AnyCancellable>()
-    
     private let networkManager: NetworkManagerProtocol
     private let localStorage: LocalStorageProtocol
-    private let cacheFileName = "cached_movies"
+    private var cancellables = Set<AnyCancellable>()
     
     init(networkManager: NetworkManagerProtocol, localStorage: LocalStorageProtocol) {
         self.networkManager = networkManager
@@ -33,27 +33,78 @@ final class MoviesRepository: MoviesRepositoryProtocol {
                 )
             }
             .handleEvents(receiveOutput: { [weak self] moviesPage in
-                // Cache the first page
+                // Cache movies and their images for offline access
                 if moviesPage.page == 1 {
-                    guard let self = self else { return }
-                    self.cacheMovies(moviesPage.movies)
-                        .sink(receiveCompletion: { _ in }, receiveValue: { })
-                        .store(in: &self.cancellables)
+                    self?.cacheMoviesWithImages(moviesPage.movies)
                 }
             })
+            .catch { [weak self] error -> AnyPublisher<MoviesPage, DomainError> in
+                // If network fails, try to return cached data
+                guard let self = self, page == 1 else {
+                    return Fail(error: DomainError.networkError(error)).eraseToAnyPublisher()
+                }
+                
+                return self.fetchCachedMovies()
+                    .map { movies in
+                        MoviesPage(page: 1, movies: movies, totalPages: 1, totalResults: movies.count)
+                    }
+                    .eraseToAnyPublisher()
+            }
             .mapError { DomainError.networkError($0) }
             .eraseToAnyPublisher()
     }
     
     func fetchCachedMovies() -> AnyPublisher<[Movie], DomainError> {
-        return localStorage.load([Movie].self, from: cacheFileName)
+        return localStorage.load([Movie].self, from: StorageKeys.movies)
+            .catch { _ in
+                // If no cached movies, return empty array
+                Just([Movie]()).setFailureType(to: Error.self)
+            }
             .mapError { _ in DomainError.cacheError("Failed to load cached movies") }
             .eraseToAnyPublisher()
     }
     
     func cacheMovies(_ movies: [Movie]) -> AnyPublisher<Void, DomainError> {
-        return localStorage.save(movies, to: cacheFileName)
+        return localStorage.save(movies, to: StorageKeys.movies)
             .mapError { _ in DomainError.cacheError("Failed to cache movies") }
             .eraseToAnyPublisher()
     }
+    
+    private func cacheMoviesWithImages(_ movies: [Movie]) {
+        // Cache movies data
+        localStorage.save(movies, to: StorageKeys.movies)
+            .sink(receiveCompletion: { _ in }, receiveValue: { })
+            .store(in: &cancellables)
+        
+        // Cache movie poster images
+        for movie in movies {
+            cacheMovieImage(movie)
+        }
+    }
+    
+    private func cacheMovieImage(_ movie: Movie) {
+        guard !movie.posterURL.isEmpty, let url = URL(string: movie.posterURL) else { return }
+        
+        let filename = StorageKeys.movieImage(url: movie.posterURL)
+        
+        // Skip if image already cached
+        if localStorage.imageExists(fileName: filename) {
+            return
+        }
+        
+        URLSession.shared.dataTaskPublisher(for: url)
+            .map { $0.data }
+            .compactMap { UIImage(data: $0) }
+            .sink(
+                receiveCompletion: { _ in },
+                receiveValue: { [weak self] image in
+                    guard let self else {return}
+                    self.localStorage.saveImage(image, to: filename)
+                        .sink(receiveCompletion: { _ in }, receiveValue: { })
+                        .store(in: &self.cancellables)
+                }
+            )
+            .store(in: &cancellables)
+    }
 }
+
