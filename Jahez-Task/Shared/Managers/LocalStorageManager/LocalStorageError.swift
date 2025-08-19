@@ -12,6 +12,7 @@ enum LocalStorageError: Error, LocalizedError {
     case loadFailed(Error)
     case deleteFailed(Error)
     case fileNotFound
+    case imageCompressionFailed
     case unknown
     
     var errorDescription: String? {
@@ -24,6 +25,8 @@ enum LocalStorageError: Error, LocalizedError {
             return "Failed to delete: \(error.localizedDescription)"
         case .fileNotFound:
             return "File not found"
+        case .imageCompressionFailed:
+            return "Failed to compress image"
         case .unknown:
             return "Unknown storage error"
         }

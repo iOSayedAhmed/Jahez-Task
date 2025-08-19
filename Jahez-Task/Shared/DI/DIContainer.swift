@@ -50,7 +50,7 @@ final class DIContainer {
             localStorage: localStorage
         )
         let movieDetailsRepository = MovieDetailsRepository(
-            networkManager: networkManager
+            networkManager: networkManager, localStorage: localStorage
         )
         
         register(MoviesRepositoryProtocol.self, service: moviesRepository)
