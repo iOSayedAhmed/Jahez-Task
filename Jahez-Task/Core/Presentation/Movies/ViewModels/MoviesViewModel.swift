@@ -26,11 +26,11 @@ final class MoviesViewModel: ObservableObject {
     @Injected private var fetchGenresUseCase: FetchGenresUseCaseProtocol
     @Injected private var filterMoviesUseCase: FilterMoviesUseCaseProtocol
     
-    private let coordinator: MoviesCoordinatorProtocol
+    private let coordinator: MoviesCoordinatorProtocol?
     private var cancellables = Set<AnyCancellable>()
     private let searchSubject = PassthroughSubject<String, Never>()
     
-    init(coordinator: MoviesCoordinatorProtocol) {
+    init(coordinator: MoviesCoordinatorProtocol?) {
         self.coordinator = coordinator
         setupSearchDebounce()
     }
@@ -38,8 +38,7 @@ final class MoviesViewModel: ObservableObject {
     // MARK: - Public Methods
     func loadMovies() {
         guard !state.isLoading else { return }
-        
-        state.isLoading = true
+        state.isFirstLuanch = false
         state.errorMessage = nil
         state.currentPage = 1
         state.movies.removeAll()
@@ -110,7 +109,7 @@ final class MoviesViewModel: ObservableObject {
     }
     
     func showMovieDetails(id: Int) {
-        coordinator.showMovieDetail(id: "\(id)")
+        coordinator?.showMovieDetail(id: "\(id)")
     }
     
     // MARK: - Private Methods

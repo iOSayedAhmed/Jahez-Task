@@ -13,6 +13,7 @@ struct MoviesViewState: Equatable {
     var selectedGenre: Genre? = nil
     var searchText: String = ""
     var isLoading: Bool = false
+    var isFirstLuanch: Bool = true
     var isLoadingMore: Bool = false
     var errorMessage: String? = nil
     var currentPage: Int = 1
@@ -29,5 +30,9 @@ struct MoviesViewState: Equatable {
     
     var shouldShowError: Bool {
         errorMessage != nil
+    }
+    
+    var shouldCallApi: Bool {
+        isFirstLuanch
     }
 }

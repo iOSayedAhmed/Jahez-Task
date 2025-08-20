@@ -12,7 +12,6 @@ import Combine
 // MARK: - Movies View
 struct MoviesView: View {
     @StateObject private var viewModel: MoviesViewModel
-    
     private let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
@@ -41,8 +40,10 @@ struct MoviesView: View {
             .navigationTitle("Watch New Movies")
             .navigationBarTitleDisplayMode(.large)
         }
-        .onAppear {
-            viewModel.loadMovies()
+        .task {
+            if viewModel.state.isFirstLuanch {
+                viewModel.loadMovies()
+            }
         }
         .refreshable {
             viewModel.refreshMovies()
